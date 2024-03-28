@@ -1,6 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
-
+import DTL from "./components/DTL";
 function App() {
   return (
     <div className="App">
@@ -18,6 +18,9 @@ function App() {
           Learn ReactJ
         </a>
       </header>
+      <DTL />
+      <DTL email="lasnguyen06@gmail.com" phone="0372657743" />
+      <DTL email="lasnguyen06@gmail.com" phone="0372657743" class="K22CNT4" />
     </div>
   );
 }
