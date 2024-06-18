@@ -7,16 +7,14 @@ function DtlCategoriesAddNew({ dtlCloseAddNewForm, onAddNewSubmit }) {
     dtlCloseAddNewForm(false);
   };
 
-  const [dtlId, setDtlId] = useState("");
   const [dtlCategoryName, setDtlCategoryName] = useState();
   const [dtlCategoryStatus, setDtlCategoryStatus] = useState(false);
 
   const btnHandleSubmit = async (ev) => {
     ev.preventDefault();
     const dtlData = {
-      dtlId,
-      dtlCategoryName,
-      dtlCategoryStatus,
+      dtlCategoryName: dtlCategoryName,
+      dtlCategoryStatus: dtlCategoryStatus,
     };
     try {
       await axios.post("dtlCategory", dtlData);
@@ -31,21 +29,6 @@ function DtlCategoriesAddNew({ dtlCloseAddNewForm, onAddNewSubmit }) {
     <div className="border m-3">
       <h2 className="m-4">Add new category</h2>
       <form className="m-3">
-        <div className="input-group mb-3">
-          <span className="input-group-text" id="basic-addon1">
-            Category ID
-          </span>
-          <input
-            name="dtlId"
-            value={dtlId}
-            onChange={(ev) => setDtlId(ev.target.value)}
-            type="text"
-            className="form-control"
-            placeholder="Category ID"
-            aria-label="Category ID"
-            aria-describedby="basic-addon1"
-          />
-        </div>
         <div className="input-group mb-3">
           <span className="input-group-text" id="basic-addon1">
             Category Name
