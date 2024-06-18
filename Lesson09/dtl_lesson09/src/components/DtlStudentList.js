@@ -1,5 +1,18 @@
-import React, { Component } from "react";
-function DtlStudentList({ renderDtlStudentList }) {
+import React from "react";
+import axios from "axios";
+
+function DtlStudentList({ renderDtlStudentList, dtlGetStudent, dtlEdit }) {
+  const dtlDelete = async (dtlId) => {
+    try {
+      await axios.delete(
+        `https://666a99ae7013419182cffd5e.mockapi.io/api/dtlv1/dtlStudents/${dtlId}`
+      );
+      dtlGetStudent();
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  };
+
   console.log("Data: ", renderDtlStudentList);
   let dtlElement = renderDtlStudentList.map((dtlStudent, i) => {
     return (
@@ -11,7 +24,20 @@ function DtlStudentList({ renderDtlStudentList }) {
         <td>{dtlStudent.dtlPhone}</td>
         <td>{dtlStudent.dtlEmail}</td>
         <td>{dtlStudent.dtlStatus ? "Hoạt động" : "Không hoạt động"}</td>
-        <td>Edit | Delete</td>
+        <td>
+          <button
+            className="btn btn-primary"
+            onClick={() => dtlEdit(dtlStudent)}
+          >
+            Edit
+          </button>
+          <button
+            className="btn btn-danger"
+            onClick={() => dtlDelete(dtlStudent.dtlId)}
+          >
+            Delete
+          </button>
+        </td>
       </tr>
     );
   });
@@ -24,7 +50,7 @@ function DtlStudentList({ renderDtlStudentList }) {
             <th scope="col">Mã sinh viên</th>
             <th scope="col">Họ tên</th>
             <th scope="col">Tuổi</th>
-            <th scope="col">Điên thoại</th>
+            <th scope="col">Điện thoại</th>
             <th scope="col">Email</th>
             <th scope="col">Trạng thái</th>
             <th scope="col">Chức năng</th>

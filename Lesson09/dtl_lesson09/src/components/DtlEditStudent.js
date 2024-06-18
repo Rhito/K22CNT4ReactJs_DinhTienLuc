@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
+import { useState } from "react";
 
-export default function DtlAddNewStudent({ dtlPostStudent }) {
+function DtlEditStudent({ dtlEditStudent, dtlEditDataStudent }) {
   const [dtlId, setDtlId] = useState();
   const [dtlName, setDtlName] = useState();
   const [dtlAge, setDtlAge] = useState();
@@ -8,9 +9,9 @@ export default function DtlAddNewStudent({ dtlPostStudent }) {
   const [dtlEmail, setDtlEmail] = useState();
   const [dtlStatus, setDtlStatus] = useState();
 
-  const dtlHandleSubmit = (dtlEvevt) => {
-    dtlEvevt.preventDefault();
-    let dtlData = {
+  const dtlHandleEditSubmit = (ev) => {
+    ev.preventDefault();
+    let dtlEditData = {
       dtlId: dtlId,
       dtlName: dtlName,
       dtlAge: dtlAge,
@@ -18,12 +19,13 @@ export default function DtlAddNewStudent({ dtlPostStudent }) {
       dtlEmail: dtlEmail,
       dtlStatus: dtlStatus,
     };
-    dtlPostStudent(dtlData);
+    dtlEditDataStudent(dtlEditData);
   };
 
   return (
     <div>
-      <h2>Thêm mới sinh viên</h2>
+      <hr />
+      <h2>Sửa thông tin sinh viên</h2>
       <hr />
       <form>
         <div className="input-group mb-3">
@@ -31,10 +33,11 @@ export default function DtlAddNewStudent({ dtlPostStudent }) {
             Mã sinh viên
           </span>
           <input
+            disabled
             type="text"
             className="form-control"
             placeholder="Mã sinh viên"
-            value={dtlId}
+            value={dtlEditStudent.dtlId}
             onChange={(ev) => setDtlId(ev.target.value)}
             aria-describedby="basic-addon1"
           />
@@ -47,7 +50,7 @@ export default function DtlAddNewStudent({ dtlPostStudent }) {
             type="text"
             className="form-control"
             placeholder="Tên sinh viên"
-            value={dtlName}
+            defaultValue={dtlEditStudent.dtlName}
             onChange={(ev) => setDtlName(ev.target.value)}
             aria-describedby="basic-addon2"
           />
@@ -59,7 +62,7 @@ export default function DtlAddNewStudent({ dtlPostStudent }) {
           <input
             type="number"
             className="form-control"
-            value={dtlAge}
+            defaultValue={dtlEditStudent.dtlAge}
             onChange={(ev) => setDtlAge(ev.target.value)}
             placeholder="Tuổi"
             aria-describedby="basic-addon3"
@@ -73,7 +76,7 @@ export default function DtlAddNewStudent({ dtlPostStudent }) {
             type="number"
             className="form-control"
             placeholder="Số điện thoại"
-            value={dtlPhone}
+            defaultValue={dtlEditStudent.dtlPhone}
             onChange={(ev) => setDtlPhone(ev.target.value)}
             aria-describedby="basic-addon4"
           />
@@ -87,7 +90,7 @@ export default function DtlAddNewStudent({ dtlPostStudent }) {
             type="text"
             className="form-control"
             placeholder="Email"
-            value={dtlEmail}
+            defaultValue={dtlEditStudent.dtlEmail}
             onChange={(ev) => setDtlEmail(ev.target.value)}
             aria-describedby="basic-addon4"
           />
@@ -103,20 +106,26 @@ export default function DtlAddNewStudent({ dtlPostStudent }) {
             aria-label="Default select example"
             onChange={(ev) => setDtlStatus(ev.target.value)}
           >
-            <option defaultValue="">Chọn trạng thái</option>
-            <option value="True">Hoạt động</option>
-            <option value="False">Không hoạt động</option>
+            <option disabled>Chọn trạng thái</option>
+            <option value="True" selected={dtlEditStudent.dtlStatus}>
+              Hoạt động
+            </option>
+            <option value="False" selected={dtlEditStudent.dtlStatus === false}>
+              Không hoạt động
+            </option>
           </select>
         </div>
 
         <button
-          className="btn btn-success"
+          className="btn btn-success px-4"
           name="dtlBtnAction"
-          onClick={dtlHandleSubmit}
+          onClick={dtlHandleEditSubmit}
         >
-          Thêm mới
+          Sửa
         </button>
       </form>
     </div>
   );
 }
+
+export default DtlEditStudent;
