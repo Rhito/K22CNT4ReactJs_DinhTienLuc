@@ -1,28 +1,48 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "../api/DtlApi";
 
-function DtlCategoriesAddNew({ dtlCloseAddNewForm, onAddNewSubmit }) {
+function DtlCategoriesAddNew({
+  dtlCloseAddNewForm,
+  onAddNewSubmit,
+  renderDtlCategory,
+}) {
   const dtlHandleClose = (ev) => {
     ev.preventDefault();
     dtlCloseAddNewForm(false);
   };
 
+  const [dtlId, setDtlId] = useState("");
   const [dtlCategoryName, setDtlCategoryName] = useState();
   const [dtlCategoryStatus, setDtlCategoryStatus] = useState(false);
 
+  useEffect(() => {
+    setDtlId(renderDtlCategory.dtlId);
+    setDtlCategoryName(renderDtlCategory.dtlCategoryName);
+    setDtlCategoryStatus(renderDtlCategory.dtlCategoryStatus);
+  }, [renderDtlCategory]);
+
   const btnHandleSubmit = async (ev) => {
     ev.preventDefault();
-    const dtlData = {
+
+    let dtlData = {
+      dtlId: 0,
       dtlCategoryName,
       dtlCategoryStatus,
     };
-    try {
-      await axios.post("/dtlCategory", dtlData);
-      onAddNewSubmit();
-      console.log(dtlData);
-    } catch (error) {
-      console.error("Error fetching data: ", error);
+    if (dtlId === 0) {
+      // them
+      try {
+        await axios.post("/dtlCategory", dtlData);
+        console.log(dtlData);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    } else {
+      // sua
+      await axios.put(`/dtlCategory/${renderDtlCategory.dtlId}`, dtlData);
     }
+    dtlCloseAddNewForm(false);
+    onAddNewSubmit();
   };
 
   return (

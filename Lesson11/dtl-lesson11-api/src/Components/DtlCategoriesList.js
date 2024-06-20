@@ -1,15 +1,28 @@
 import React from "react";
 import axios from "../api/DtlApi";
 
-function dtlCategoriesList({ dtlRenderCateLiest, dtlAddNewForm, onDelete }) {
+function dtlCategoriesList({
+  dtlRenderCateLiest,
+  dtlAddNewForm,
+  onDelete,
+  onDtlEdit,
+}) {
+  // handle delete
   const dtlDelete = async (dtlId) => {
-    try {
-      await axios.delete(`/dtlCategory/${dtlId}`);
-      onDelete();
-    } catch (error) {
-      console.error("Error fetching data: ", error);
+    if (
+      window.confirm(`Do you really wanna delete "${dtlId}", Are you sure?`)
+    ) {
+      try {
+        await axios.delete(`/dtlCategory/${dtlId}`);
+        onDelete();
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
     }
   };
+
+  //handle edit
+  const dtlHandleEdit = (el) => onDtlEdit(el);
 
   let dtlCategoriesElements = dtlRenderCateLiest.map((el, i) => {
     return (
@@ -25,7 +38,9 @@ function dtlCategoriesList({ dtlRenderCateLiest, dtlAddNewForm, onDelete }) {
           >
             Delete
           </button>
-          <button>Edit</button>
+          <button className="btn btn-primary" onClick={() => dtlHandleEdit(el)}>
+            Edit
+          </button>
         </td>
       </tr>
     );

@@ -7,11 +7,21 @@ import DtlCategoriesAddNew from "./Components/DtlCategoriesAddNew";
 function DtlApp() {
   //  Create var
   const [dtlCategory, setDtlCategory] = useState([]);
+  // set form status
+  const [dtlAddNewForm, setDtlAddNewForm] = useState(false);
+  // set data Edit
+  const [dtlCategoryEdit, setDtlCategoryEdit] = useState([]);
+
+  // Handle Edit
+  const dtlHandleEdit = (dtlEditData) => {
+    setDtlCategoryEdit(dtlEditData);
+    setDtlAddNewForm(true);
+  };
 
   // Call API
   const getCategories = async () => {
     try {
-      const dtlCateResponse = await axios.get("dtlCategory");
+      const dtlCateResponse = await axios.get("/dtlCategory");
       setDtlCategory(dtlCateResponse.data);
     } catch (error) {
       console.error("Error fetching data: ", error);
@@ -21,9 +31,6 @@ function DtlApp() {
     getCategories();
   }, []);
 
-  // set form status
-  const [dtlAddNewForm, setDtlAddNewForm] = useState(false);
-
   return (
     <div className="container border my-3">
       <h1 className="text-center">Đinh Tiến Lực - Call API</h1>
@@ -31,11 +38,13 @@ function DtlApp() {
         dtlRenderCateLiest={dtlCategory}
         dtlAddNewForm={setDtlAddNewForm}
         onDelete={getCategories}
+        onDtlEdit={dtlHandleEdit}
       />
       {dtlAddNewForm && (
         <DtlCategoriesAddNew
           dtlCloseAddNewForm={setDtlAddNewForm}
           onAddNewSubmit={getCategories}
+          renderDtlCategory={dtlCategoryEdit}
         />
       )}
     </div>
