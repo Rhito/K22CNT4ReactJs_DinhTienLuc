@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import DtlListUser from "./Components/DtlListUser";
 import axios from "./Api/dtlAxios";
+import DtlFormTableName from "../../../TestExam/dtl2210900038-de01-app/src/dtl_components/DtlFormTableName";
 
 function App() {
   const [dtlListUsers, setDtlListUsers] = useState();
