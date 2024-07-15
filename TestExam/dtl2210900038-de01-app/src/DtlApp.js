@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import DtlListTableName from "./dtl_components/DtlListTableName";
 import DtlFormTableName from "./dtl_components/DtlFormTableName";
 
-function App() {
+function DtlApp() {
   // Đọc dữ liệu từ api
   const [dtlListTableName, setDtlListTableName] = useState([]);
   const dtlGetTableName = async () => {
@@ -74,4 +74,4 @@ function App() {
   );
 }
 
-export default App;
+export default DtlApp;
